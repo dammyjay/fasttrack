@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/styles2.css" />
     <link rel="stylesheet" href="/css/styles3.css" />
-    <link rel="icon" type="image/x-icon" href="/public/images/JKT logo bg.png" />
+    <link rel="icon" type="image/x-icon" href="/images/fasttrack.jpg" />
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -150,8 +150,7 @@
     </section>
 
     <!-- scripts for benefits display  -->
-    <section id="benefits" class="section">
-      <!-- <h2 style="text-align: center;">Benefits</h2> -->
+    <!-- <section id="benefits" class="section">
        <h2 style="text-align: center; color: black;">Benefits</h2>
       <div class="benefits-grid">
         <% benefits.forEach(benefit => { %>
@@ -166,13 +165,81 @@
           </div>
         <% }) %>
       </div>
+    </section> -->
+
+    <section id="benefits" class="section">
+      <!-- <h2 style="text-align: center;">Benefits</h2> -->
+       <h2 style="text-align: center; color: black;">Benefits</h2>
+      <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-profile">
+              <img src="/images/hero1.jpg" alt="Icon" />
+            </div>
+            <div class="benefit-details">
+              <h4>Benefit 1</h4>
+              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-profile">
+              <img src="/images/hero1.jpg" alt="Icon" />
+            </div>
+            <div class="benefit-details">
+              <h4>Benefit 2</h4>
+              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-profile">
+              <img src="/images/hero1.jpg" alt="Icon" />
+            </div>
+            <div class="benefit-details">
+              <h4>Benefit 3</h4>
+              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-profile">
+              <img src="/images/hero1.jpg" alt="Icon" />
+            </div>
+            <div class="benefit-details">
+              <h4>Benefit 4</h4>
+              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-profile">
+              <img src="/images/hero1.jpg" alt="Icon" />
+            </div>
+            <div class="benefit-details">
+              <h4>Benefit 5</h4>
+              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-profile">
+              <img src="/images/hero1.jpg" alt="Icon" />
+            </div>
+            <div class="benefit-details">
+              <h4>Benefit 6</h4>
+              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+            </div>
+          </div>
+        
+      </div>
+
+      
     </section>
 
 
 
     <!-- course section -->
-     <section id="courses" class="section">
-        <!-- <h2 style="text-align: center;">Explore Our Courses</h2> -->
+     <!-- <section id="courses" class="section">
          <h2 style="text-align: center; color: black;">Featured Courses</h2>
         <div class="horizontal-scroll-container" id="courseScroll">
           <% courses.forEach(course => { %>
@@ -181,7 +248,7 @@
                 <img src="<%= course.thumbnail_url %>" alt="Course Thumbnail" />
               <% } %>
               <h4><%= course.title %></h4>
-              <!-- <p><%- course.description.substring(0, 50) %>...</p> -->
+              <p><%- course.description.substring(0, 50) %>...</p>
               <small><strong><%= course.level %></strong> | <%= course.pathway_name || 'General' %></small>
             </div>
           <% }) %>
@@ -189,7 +256,76 @@
          <div style="text-align: center; margin-top: 1rem;">
           <a href="/courses" class="login-button">View All Courses</a>
         </div>
+      </section> -->
+
+      <section id="courses" class="section">
+        <!-- <h2 style="text-align: center;">Explore Our Courses</h2> -->
+         <h2 style="text-align: center; color: black;">Featured Courses</h2>
+        <div class="horizontal-scroll-container" id="courseScroll">
+            <div class="course-card scroll-card">
+                <img src="/images/hero2.jpg" alt="Course Thumbnail" />
+              <h4>Introduction to coding</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <small><strong>Age</strong> | 7 - 15 (years)</small><br>
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
+            </div>
+
+            <div class="course-card scroll-card">
+                <img src="/images/hero2.jpg" alt="Course Thumbnail" />
+              <h4>Introduction to coding</h4>
+              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <small><strong>Age</strong> | 7 - 15 (years)</small><br>
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
+            </div>
+
+            <div class="course-card scroll-card">
+                <img src="/images/hero2.jpg" alt="Course Thumbnail" />
+              <h4>Introduction to coding</h4>
+              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <small><strong>Age</strong> | 7 - 15 (years)</small><br>
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
+            </div>
+
+            <div class="course-card scroll-card">
+                <img src="/images/hero2.jpg" alt="Course Thumbnail" />
+              <h4>Introduction to coding</h4>
+              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <small><strong>Age</strong> | 7 - 15 (years)</small><br>
+              <small><strong>₦ 30,000</strong></small>
+              <button>Purchase Course</button>
+            </div>
+
+            <div class="course-card scroll-card">
+                <img src="/images/hero2.jpg" alt="Course Thumbnail" />
+              <h4>Introduction to coding</h4>
+              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <small><strong>Age</strong> | 7 - 15 (years)</small><br>
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
+            </div>
+
+            <div class="course-card scroll-card">
+                <img src="/images/hero2.jpg" alt="Course Thumbnail" />
+              <h4>Introduction to coding</h4>
+              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <small><strong>Age</strong> | 7 - 15 (years)</small><br>
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
+            </div>
+        </div>
+         <div style="text-align: center; margin-top: 1rem;">
+          <a href="/courses" class="login-button">View All Courses</a>
+        </div>
       </section>
+
 
        <section class="event_section">
           <h2>📅 Upcoming Events</h2>
@@ -246,7 +382,7 @@
     <footer class="site-footer">
       <div class="footer-container"> 
         <div class="footer-about"> 
-            <a href="/"><img src="/images/JKT logo bg.png" alt="Logo" width="50px" height="50px"/></a>
+            <a href="/"><img src="/images/fasttrack.jpg" alt="Logo" width="50px" height="50px"/></a>
             
           <h3>Fasttrack Innovations </h3> 
           <p>Welcome to the Future of Learning — Empowering Students, Teachers, and Schools with Smart Education Tools.</p>
