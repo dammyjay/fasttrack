@@ -193,6 +193,18 @@
     padding: 6px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.logo-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.logo-title img {
+    height: 30px;
+    margin-bottom: 0.5rem;
+}
   
 }
 
