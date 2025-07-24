@@ -408,6 +408,15 @@ router.get("/courses", async (req, res) => {
     groupedCourses[pathway][level].push(course);
   });
 
+  let walletBalance = 0;
+  if (req.session.user) {
+    const walletResult = await pool.query(
+      "SELECT wallet_balance2 FROM users2 WHERE email = $1",
+      [req.session.user.email]
+    );
+    walletBalance = walletResult.rows[0]?.wallet_balance2 || 0;
+  }
+
    const isLoggedIn = !!req.session.user; // or whatever property you use for login
    const profilePic = req.session.user
      ? req.session.user.profile_picture
@@ -418,6 +427,7 @@ router.get("/courses", async (req, res) => {
   res.render("userCourses", {
     info,
     users,
+    walletBalance,
     isLoggedIn: !!req.session.user,
     profilePic,
     groupedCourses,
