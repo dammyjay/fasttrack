@@ -23,7 +23,7 @@ const sendFaqAnswerEmail = async (to, question, answer) => {
 
 async function sendEmail(to, subject, message) {
   await transporter.sendMail({
-    from: `"JKT Hub" <${process.env.EMAIL_USERNAME}>`,
+    from: `"Fasttrack Innovation" <${process.env.EMAIL_USERNAME}>`,
     to,
     subject,
     html: message,
