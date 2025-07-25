@@ -20,19 +20,19 @@
       <button class="nav-toggle" onclick="toggleNav()">☰</button>
       <nav id="main-nav">
         <a href="/admin/dashboard">Dashboard</a>
-        <a href="/admin/pathways">Pathways</a>
+        <!-- <a href="/admin/pathways">Pathways</a> -->
         <a class="active" href="/admin/courses">Courses</a>
 
-        <div class="dropdown">
+        <!-- <div class="dropdown">
           <button class="dropbtn" onclick="toggleDropdown('galleryMenu')">
             Gallery ▾
           </button>
           <div class="dropdown-content" id="galleryMenu">
             <a href="/admin/gallery">Gallery</a>
-            <!-- <a href="/admin/gallery/categories">Categories</a> -->
-            <!-- <a href="/admin/demo-videos">Demo</a> -->
+            <a href="/admin/gallery/categories">Categories</a> 
+            <a href="/admin/demo-videos">Demo</a>
           </div>
-        </div>
+        </div> -->
 
         <div class="dropdown">
           <button
@@ -42,10 +42,10 @@
             company ▾
           </button>
           <div class="dropdown-content" id="ministryMenu">
-            <a href="/admin/company">Company Details</a>
-            <a href="/admin/about">About Us</a>
+            <!-- <a href="/admin/company">Company Details</a> -->
+            <!-- <a href="/admin/about">About Us</a> -->
             <!-- <a href="/admin/devotionals">Devotionals</a> -->
-            <a href="/admin/benefits">Benefits</a>
+            <!-- <a href="/admin/benefits">Benefits</a> -->
             <a href="/admin/events">Events</a>
           </div>
         </div>
@@ -121,8 +121,12 @@
           <option value="">Select Level</option>
           <option value="Beginner">Beginner</option>
           <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option></select
-        ><br />
+          <option value="Advanced">Advanced</option></select>
+          <br />
+      </div>
+
+      <div class="container">
+        <input type="text" name="Age" placeholder="Age range (e.g 4 - 10)" required /><br />
       </div>
 
       <div class="container">
@@ -150,7 +154,7 @@
 
     <!-- <h3>All Courses</h3> -->
 
-    <form method="GET" action="/admin/courses" style="margin-top: 20px">
+    <!-- <form method="GET" action="/admin/courses" style="margin-top: 20px">
       <input
         type="text"
         name="search"
@@ -158,92 +162,70 @@
         value="<%= search || '' %>"
       />
       <button type="submit">Search</button>
-    </form>
+    </form> -->
+   
     <h2>Existing Courses</h2>
 
-    
-<div class="pathway-nav">
-  <button class="path-nav-btn" onclick="filterByPathway('All')">All Pathways</button>
-  <% careerPathways.forEach(path => { %>
-    <button onclick="filterByPathway('<%= path.title %>')"><%= path.title %></button>
-  <% }) %>
-</div>
-
-
-
-  <% for (let pathway in groupedCourses) { %>
-  <div class="pathway-group" data-pathway="<%= pathway %>">
-    <h2 style="margin-top: 2rem; color: goldenrod;"><%= pathway %></h2>
-
-    <% for (let level in groupedCourses[pathway]) { %>
-      <div class="course-level-section" data-level="<%= level %>">
-        <h3 style="margin-top: 1rem; color: #444;"><%= level %> Level</h3>
-        <div class="section">
-          <section class="course-scroll-container">
-            <% groupedCourses[pathway][level].forEach(course => { %>
-              <div class="article-card scroll-card">
-                <% if (course.thumbnail_url) { %>
-                  <img src="<%= course.thumbnail_url %>" alt="Course Thumbnail"  />
-                <% } %>
-
-                <h4><%= course.title %></h4>
-                <div class="article-body" id="desc-<%= course.id %>" data-full="<%- course.description.replace(/"/g, '&quot;') %>">
-                  <%- course.description.substring(0, 30) %>...
-                </div>
-
-                <a href="javascript:void(0);" class="toggle-article" onclick="togglePathway(<%= course.id %>)">Show More</a>
-
-                <div class="article-buttons">
-                  <button class="btn-edit" onclick="openEditModal(<%= course.id %>)">Edit</button>
-                  <form action="/admin/courses/delete/<%= course.id %>" method="POST" onsubmit="return confirm('Delete this course?');">
-                    <button class="btn-delete" type="submit">Delete</button>
-                  </form>
-                </div>
-              </div>
-
-              <!-- Edit Modal for this course -->
-              <div id="editModal-<%= course.id %>" class="modal">
-                <div class="modal-content">
-                  <span class="close" onclick="closeEditModal(<%= course.id %>)">&times;</span>
-                  <h2>Edit Course</h2>
-                  <form action="/admin/courses/edit/<%= course.id %>" method="POST" enctype="multipart/form-data">
-                    <input type="text" name="title" value="<%= course.title %>" required /><br />
-                    <!-- <textarea id="content" name="description"><%- course.description %></textarea><br /> -->
-                    <textarea id="editContent-<%= course.id %>" name="description"><%- course.description %></textarea>
-
-                    <select name="level" required>
-                      <option value="">Select Level</option>
-                      <option value="Beginner" <%= course.level === 'Beginner' ? 'selected' : '' %>>Beginner</option>
-                      <option value="Intermediate" <%= course.level === 'Intermediate' ? 'selected' : '' %>>Intermediate</option>
-                      <option value="Advanced" <%= course.level === 'Advanced' ? 'selected' : '' %>>Advanced</option>
-                    </select><br /><br>
-
-                    <select name="career_pathway_id" required>
-                      <option value="">-- Career Pathway --</option>
-                      <% careerPathways.forEach(path => { %>
-                        <option value="<%= path.id %>" <%= path.id === course.career_pathway_id ? 'selected' : '' %>><%= path.title %></option>
-                      <% }) %>
-                    </select><br /><br>
-
-                    <label for="">Sort Number</label>
-                    <input type="number" name="sort_order" value="<%= course.sort_order %>" /><br />
-
-                    <% if (course.thumbnail_url) { %>
-                      <img src="<%= course.thumbnail_url %>" width="100" /><br />
-                    <% } %>
-                    <input type="file" name="thumbnail" /><br />
-                    <button type="submit">Update Course</button>
-                  </form>
-                </div>
-              </div>
-
-            <% }) %>
-          </section>
+    <section class="article-grid">
+     <% courses.forEach(course => { %>
+  <!-- COURSE CARD -->
+        <div class="course-card scroll-card">
+          <% if (course.thumbnail_url) { %>
+            <img src="<%= course.thumbnail_url %>" alt="Course Thumbnail" />
+          <% } %>
+          <h4><%= course.title %></h4>
+          <div class="article-body" id="desc-<%= course.id %>">
+            <%- course.description.length > 60 ? course.description.substring(0, 60) + '...' : course.description %>
+          </div>
+          <small><strong>Age</strong> | <%= course.age %> (years)</small><br>
+          <% if (course.description.length > 60) { %>
+            <a href="javascript:void(0);" class="toggle-article" onclick="toggleDescription(<%= course.id %>, `<%- course.description.replace(/`/g, '\\`').replace(/"/g, '&quot;') %>`)">Show More</a>
+          <% } %>
+          <div class="article-buttons">
+            <button class="btn-edit" onclick="openEditModal(<%= course.id %>)">Edit</button>
+            <form action="/admin/courses/delete/<%= course.id %>" method="POST" onsubmit="return confirm('Delete this course?');">
+              <button class="btn-delete" type="submit">Delete</button>
+            </form>
+          </div>
         </div>
-      </div>
-    <% } %>
-  </div>
-<% } %>
+
+        <!-- MOVE MODAL OUTSIDE COURSE CARD HERE -->
+        <div id="editModal-<%= course.id %>" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeEditModal(<%= course.id %>)">&times;</span>
+            <h2>Edit Course</h2>
+            <form action="/admin/courses/edit/<%= course.id %>" method="POST" enctype="multipart/form-data">
+              <input type="text" name="title" value="<%= course.title %>" required /><br />
+              <textarea id="editContent-<%= course.id %>" name="description"><%- course.description %></textarea><br />
+              <select name="level" required>
+                <option value="">Select Level</option>
+                <option value="Beginner" <%= course.level === 'Beginner' ? 'selected' : '' %>>Beginner</option>
+                <option value="Intermediate" <%= course.level === 'Intermediate' ? 'selected' : '' %>>Intermediate</option>
+                <option value="Advanced" <%= course.level === 'Advanced' ? 'selected' : '' %>>Advanced</option>
+              </select><br /><br />
+              <input type="text" name="Age" value="<%= course.age %>" required /><br />
+              <select name="career_pathway_id">
+                <option value="">-- Career Pathway --</option>
+                <% careerPathways.forEach(path => { %>
+                  <option value="<%= path.id %>" <%= path.id === course.career_pathway_id ? 'selected' : '' %>><%= path.title %></option>
+                <% }) %>
+              </select><br /><br />
+              <label>Sort Number</label>
+              <input type="number" name="sort_order" value="<%= course.sort_order %>" /><br />
+              <% if (course.thumbnail_url) { %>
+                <img src="<%= course.thumbnail_url %>" width="100" /><br />
+              <% } %>
+              <input type="file" name="thumbnail" /><br />
+              <button type="submit">Update Course</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+
+
+
+    </section>
+
 
 
 
@@ -255,6 +237,24 @@
     <script>
       CKEDITOR.replace("content");
     </script>
+
+
+    <!-- script for show more description -->
+     <script>
+        function toggleDescription(courseId, fullDescription) {
+          const descElement = document.getElementById(`desc-${courseId}`);
+          const toggleBtn = event.target;
+
+          const isCollapsed = toggleBtn.innerText === "Show More";
+          if (isCollapsed) {
+            descElement.innerHTML = fullDescription;
+            toggleBtn.innerText = "Show Less";
+          } else {
+            descElement.innerHTML = fullDescription.substring(0, 60) + "...";
+            toggleBtn.innerText = "Show More";
+          }
+        }
+      </script>
 
     
 

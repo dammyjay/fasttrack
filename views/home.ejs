@@ -242,28 +242,41 @@
 
 
 
-    <!-- course section -->
-     <!-- <section id="courses" class="section">
-         <h2 style="text-align: center; color: black;">Featured Courses</h2>
+          <!-- course section -->
+        <section id="courses" class="section">
+        <h2 style="text-align: center; color: black;">Featured Courses</h2>
+
         <div class="horizontal-scroll-container" id="courseScroll">
-          <% courses.forEach(course => { %>
-            <div class="course-card scroll-card">
-              <% if (course.thumbnail_url) { %>
-                <img src="<%= course.thumbnail_url %>" alt="Course Thumbnail" />
-              <% } %>
-              <h4><%= course.title %></h4>
-              <p><%- course.description.substring(0, 50) %>...</p>
-              <small><strong><%= course.level %></strong> | <%= course.pathway_name || 'General' %></small>
-            </div>
-          <% }) %>
+          <% if (courses.length > 0) { %>
+            <% courses.forEach(course => { %>
+              <div class="course-card scroll-card">
+                <% if (course.thumbnail_url) { %>
+                  <img src="<%= course.thumbnail_url %>" alt="Course Thumbnail" />
+                <% } else { %>
+                  <img src="/images/empty.png" alt="Course Thumbnail" />
+                <% } %>
+
+                <h4><%= course.title %></h4>
+                <!-- <p>
+                  <%- course.description.length > 100
+                    ? course.description.substring(0, 100) + '...'
+                    : course.description %>
+                </p> -->
+                <small><strong>Age</strong> | <%= course.age || 'N/A' %> (years)</small><br>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p style="text-align: center;">No courses available yet.</p>
+          <% } %>
         </div>
-         <div style="text-align: center; margin-top: 1rem;">
+
+        <div style="text-align: center; margin-top: 1rem;">
           <a href="/courses" class="login-button">View All Courses</a>
         </div>
-      </section> -->
+        </section>
 
-      <section id="courses" class="section">
-        <!-- <h2 style="text-align: center;">Explore Our Courses</h2> -->
+
+      <!-- <section id="courses" class="section">
          <h2 style="text-align: center; color: black;">Featured Courses</h2>
         <div class="horizontal-scroll-container" id="courseScroll">
             <div class="course-card scroll-card">
@@ -273,70 +286,70 @@
                 In this hands-on course, students will learn the core pillars of digital 
                 marketing by creating,launching, and promoting their very own brand.</p>
               <small><strong>Age</strong> | 14 - 19 (years)</small><br>
-              <!-- <small><strong>₦ 30,000</strong></small><br>
-              <button>Purchase Course</button> -->
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
             </div>
 
             <div class="course-card scroll-card">
                 <img src="/images/web.png" alt="Course Thumbnail" />
               <h4>Web Development 101: Build Your Digital Portfolio</h4>
-              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p>
               <p>Go from zero to a live website in just six weeks. 
                 This course demystifies the core technologies of the web: HTML, CSS, and JavaScript.</p>
               <small><strong>Age</strong> | 14 - 19 (years)</small><br>
-              <!-- <small><strong>₦ 30,000</strong></small><br>
-              <button>Purchase Course</button> -->
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
             </div>
 
             <div class="course-card scroll-card">
                 <img src="/images/pictoblox.png" alt="Course Thumbnail" />
               <h4>PictoBlox AI Innovators Course</h4>
-              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p>
               <p>Students will go beyond basic coding to explore the exciting 
                 world of Artificial Intelligence and Machine Learning 
                 using a user-friendly, block-based platform and text based</p>
               <small><strong>Age</strong> | 4 - 13 (years)</small><br>
-              <!-- <small><strong>₦ 30,000</strong></small><br>
-              <button>Purchase Course</button> -->
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
             </div>
 
             <div class="course-card scroll-card">
                 <img src="/images/python.png" alt="Course Thumbnail" />
               <h4>Python Programming</h4>
-              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p>
               <p>This course is the definitive entry point into text-based programming. 
                 Over six weeks, students will journey from basic concepts to building a complete, 
                 portfolio-ready application. </p>
               <small><strong>Age</strong> | 7 - 15 (years)</small><br>
-              <!-- <small><strong>₦ 30,000</strong></small><br>
-              <button>Purchase Course</button> -->
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
             </div>
 
             <div class="course-card scroll-card">
                 <img src="/images/empty.png" alt="Course Thumbnail" />
               <h4>Introduction to coding</h4>
-              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <small><strong>Age</strong> | 7 - 15 (years)</small><br>
-              <!-- <small><strong>₦ 30,000</strong></small><br>
-              <button>Purchase Course</button> -->
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
             </div>
 
             <div class="course-card scroll-card">
                 <img src="/images/empty.png" alt="Course Thumbnail" />
               <h4>Introduction to coding</h4>
-              <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p> -->
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel sem fermentum, pretium felis id, sagittis risus.</p>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               <small><strong>Age</strong> | 7 - 15 (years)</small><br>
-              <!-- <small><strong>₦ 30,000</strong></small><br>
-              <button>Purchase Course</button> -->
+              <small><strong>₦ 30,000</strong></small><br>
+              <button>Purchase Course</button>
             </div>
         </div>
 
          <div style="text-align: center; margin-top: 1rem;">
           <a href="/courses" class="login-button">View All Courses</a>
         </div>
-      </section>
+      </section> -->
 
 
        <section id="events" class="event_section">

@@ -145,124 +145,121 @@ const sendEmail = require("../utils/sendEmail");
 
 router.get("/events/:id", userController.showEvent);
 router.get("/", async (req, res) => {
-    try {
-      const [infoResult, career_pathwaysResult, usersResult] = await Promise.all([
-        pool.query("SELECT * FROM company_info ORDER BY id DESC LIMIT 1"),
-        pool.query("SELECT * FROM career_pathways WHERE show_on_homepage = true ORDER BY created_at"),
-        pool.query("SELECT * FROM users2"),
-      ]);
-        
-      // const faqsResult = await pool.query(
-      //   "SELECT * FROM faqs WHERE is_published = true ORDER BY created_at DESC LIMIT 5"
-      // );
-  
-      // const randomImagesResult = await pool.query(
-      //   "SELECT url FROM gallery_images ORDER BY RANDOM() LIMIT 5"
-      // );
-      const info = infoResult.rows[0];
-      const users = usersResult.rows;
-      const career_pathways = career_pathwaysResult.rows;
-      // const faqs = faqsResult.rows;
-      // const annResult = await pool.query(
-      //   // "SELECT * FROM announcements ORDER BY event_date DESC LIMIT 1"
-      //   "SELECT * FROM announcements WHERE is_visible = true ORDER BY event_date DESC LIMIT 1"
-      // );
-      // const announcement = annResult.rows[0];
-      // const carouselImages = randomImagesResult.rows.map((row) => row.url);
-  
-      // fetch demo videos
-      // const demoVideos = await demoVideoController.getPublicDemoVideos();
-  
-      // const demoResult = await pool.query(
-      //   "SELECT * FROM demo_videos2 ORDER BY created_at DESC"
-      // );
-      // const demoVideos = demoResult.rows;
-      // console.log("Demo Videos:", demoVideos);
-  
-  
-  
-      // const allImagesResult = await pool.query("SELECT url FROM gallery_images");
-      // const allImages = allImagesResult.rows.map((row) => row.url);
-  
-      // Deterministically shuffle based on the day
-      // function getDailyImages(images, count) {
-      //   const today = new Date();
-      //   let seed =
-      //     today.getFullYear() * 10000 +
-      //     (today.getMonth() + 1) * 100 +
-      //     today.getDate();
-      //   // Simple seeded shuffle (Fisher-Yates with seed)
-      //   let arr = images.slice();
-      //   let random = function () {
-      //     var x = Math.sin(seed++) * 10000;
-      //     return x - Math.floor(x);
-      //   };
-      //   for (let i = arr.length - 1; i > 0; i--) {
-      //     const j = Math.floor(random() * (i + 1));
-      //     [arr[i], arr[j]] = [arr[j], arr[i]];
-      //   }
-      //   return arr.slice(0, count);
-      // }
-  
-      // wallet balance code
-     
-      const benefitsRes = await pool.query(
-        "SELECT * FROM benefits ORDER BY created_at ASC"
+  try {
+    const [infoResult, career_pathwaysResult, usersResult] = await Promise.all([
+      pool.query("SELECT * FROM company_info ORDER BY id DESC LIMIT 1"),
+      pool.query(
+        "SELECT * FROM career_pathways WHERE show_on_homepage = true ORDER BY created_at"
+      ),
+      pool.query("SELECT * FROM users2"),
+    ]);
+
+    // const faqsResult = await pool.query(
+    //   "SELECT * FROM faqs WHERE is_published = true ORDER BY created_at DESC LIMIT 5"
+    // );
+
+    // const randomImagesResult = await pool.query(
+    //   "SELECT url FROM gallery_images ORDER BY RANDOM() LIMIT 5"
+    // );
+    const info = infoResult.rows[0];
+    const users = usersResult.rows;
+    const career_pathways = career_pathwaysResult.rows;
+    // const faqs = faqsResult.rows;
+    // const annResult = await pool.query(
+    //   // "SELECT * FROM announcements ORDER BY event_date DESC LIMIT 1"
+    //   "SELECT * FROM announcements WHERE is_visible = true ORDER BY event_date DESC LIMIT 1"
+    // );
+    // const announcement = annResult.rows[0];
+    // const carouselImages = randomImagesResult.rows.map((row) => row.url);
+
+    // fetch demo videos
+    // const demoVideos = await demoVideoController.getPublicDemoVideos();
+
+    // const demoResult = await pool.query(
+    //   "SELECT * FROM demo_videos2 ORDER BY created_at DESC"
+    // );
+    // const demoVideos = demoResult.rows;
+    // console.log("Demo Videos:", demoVideos);
+
+    // const allImagesResult = await pool.query("SELECT url FROM gallery_images");
+    // const allImages = allImagesResult.rows.map((row) => row.url);
+
+    // Deterministically shuffle based on the day
+    // function getDailyImages(images, count) {
+    //   const today = new Date();
+    //   let seed =
+    //     today.getFullYear() * 10000 +
+    //     (today.getMonth() + 1) * 100 +
+    //     today.getDate();
+    //   // Simple seeded shuffle (Fisher-Yates with seed)
+    //   let arr = images.slice();
+    //   let random = function () {
+    //     var x = Math.sin(seed++) * 10000;
+    //     return x - Math.floor(x);
+    //   };
+    //   for (let i = arr.length - 1; i > 0; i--) {
+    //     const j = Math.floor(random() * (i + 1));
+    //     [arr[i], arr[j]] = [arr[j], arr[i]];
+    //   }
+    //   return arr.slice(0, count);
+    // }
+
+    // wallet balance code
+
+    const benefitsRes = await pool.query(
+      "SELECT * FROM benefits ORDER BY created_at ASC"
+    );
+
+    const coursesResult = await pool.query(`
+      SELECT * FROM courses
+      ORDER BY created_at DESC
+    `);
+
+    // const eventsResult = await pool.query(
+    //   `SELECT * FROM events ORDER BY event_date DESC LIMIT 5`
+    // );
+
+    const eventsResult = await pool.query(
+      "SELECT * FROM events WHERE show_on_homepage = true ORDER BY event_date ASC LIMIT 5"
+    );
+
+    const events = eventsResult.rows;
+
+    let walletBalance = 0;
+    if (req.session.user) {
+      const walletResult = await pool.query(
+        "SELECT wallet_balance2 FROM users2 WHERE email = $1",
+        [req.session.user.email]
       );
-
-      const coursesResult = await pool.query(
-        `
-          SELECT courses.*, cp.title AS pathway_name
-          FROM courses
-          LEFT JOIN career_pathways cp ON cp.id = courses.career_pathway_id
-          ORDER BY cp.title ASC, courses.level ASC, sort_order ASC LIMIT 10
-        `
-      );
-      
-      // const eventsResult = await pool.query(
-      //   `SELECT * FROM events ORDER BY event_date DESC LIMIT 5`
-      // );
-
-      const eventsResult = await pool.query(
-        "SELECT * FROM events WHERE show_on_homepage = true ORDER BY event_date ASC LIMIT 5"
-      );
-
-      const events = eventsResult.rows;
-
-      let walletBalance = 0;
-      if (req.session.user) {
-        const walletResult = await pool.query(
-          "SELECT wallet_balance2 FROM users2 WHERE email = $1",
-          [req.session.user.email]
-        );
-        walletBalance = walletResult.rows[0]?.wallet_balance2 || 0;
-      }
-
-  
-      // Add this line to pass login status to EJS
-      const isLoggedIn = !!req.session.user; // or whatever property you use for login
-      const profilePic = req.session.user ? req.session.user.profile_picture : null;
-      console.log("User session:", req.session.user);
-      console.log("Is user logged in:", isLoggedIn);
-      res.render("home", {
-        info,
-        users,
-        events,
-        walletBalance,
-        career_pathways,
-        title: "Fasttrack Innovations",
-        profilePic,
-        benefits: benefitsRes.rows,
-        courses: coursesResult.rows,
-        isLoggedIn: !!req.session.user,
-        subscribed: req.query.subscribed,
-      });
-    } catch (err) {
-      console.error("Error fetching homepage data:", err);
-      res.status(500).send("Server Error");
+      walletBalance = walletResult.rows[0]?.wallet_balance2 || 0;
     }
+
+    // Add this line to pass login status to EJS
+    const isLoggedIn = !!req.session.user; // or whatever property you use for login
+    const profilePic = req.session.user
+      ? req.session.user.profile_picture
+      : null;
+    console.log("User session:", req.session.user);
+    console.log("Is user logged in:", isLoggedIn);
+    res.render("home", {
+      info,
+      users,
+      events,
+      walletBalance,
+      career_pathways,
+      title: "Fasttrack Innovations",
+      profilePic,
+      benefits: benefitsRes.rows,
+      courses: coursesResult.rows,
+      isLoggedIn: !!req.session.user,
+      subscribed: req.query.subscribed,
+    });
+  } catch (err) {
+    console.error("Error fetching homepage data:", err);
+    res.status(500).send("Server Error");
+  }
 });
-  
+
 // router.get("/make-payment", (req, res) => {
 //   if (!req.session.user) {
 //     return res.redirect("/admin/login");
@@ -311,7 +308,6 @@ router.get("/make-payment", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
 
 router.post("/verify-payment", async (req, res) => {
   const { reference, email, fullName } = req.body;
@@ -383,21 +379,26 @@ router.get("/courses", async (req, res) => {
   );
   const info = infoResult.rows[0] || {};
 
-  const usersResult = await pool.query ("SELECT * FROM users2");
-    const users = usersResult.rows;
+  const usersResult = await pool.query("SELECT * FROM users2");
+  const users = usersResult.rows;
   const careerPathwaysResult = await pool.query(
     "SELECT * FROM career_pathways ORDER BY title"
   );
-  const coursesResult = await pool.query(`
-    SELECT courses.*, cp.title AS pathway_name
-    FROM courses
-    LEFT JOIN career_pathways cp ON cp.id = courses.career_pathway_id
-    ORDER BY cp.title ASC, courses.level ASC, sort_order ASC
-  `);
+  // const coursesResult = await pool.query(`
+  //   SELECT courses.*, cp.title AS pathway_name
+  //   FROM courses
+  //   LEFT JOIN career_pathways cp ON cp.id = courses.career_pathway_id
+  //   ORDER BY cp.title ASC, courses.level ASC, sort_order ASC
+  // `);
 
   // const coursesResult = await pool.query(
   //   "SELECT * FROM courses ORDER BY title"
   // );
+
+  const coursesResult = await pool.query(`
+  SELECT * FROM courses
+  ORDER BY created_at DESC
+`);
 
   // Grouping courses by pathway and level
   const groupedCourses = {};
@@ -421,12 +422,10 @@ router.get("/courses", async (req, res) => {
     walletBalance = walletResult.rows[0]?.wallet_balance2 || 0;
   }
 
-   const isLoggedIn = !!req.session.user; // or whatever property you use for login
-   const profilePic = req.session.user
-     ? req.session.user.profile_picture
-     : null;
-   console.log("User session:", req.session.user);
-   console.log("Is user logged in:", isLoggedIn);
+  const isLoggedIn = !!req.session.user; // or whatever property you use for login
+  const profilePic = req.session.user ? req.session.user.profile_picture : null;
+  console.log("User session:", req.session.user);
+  console.log("Is user logged in:", isLoggedIn);
 
   res.render("userCourses", {
     info,
@@ -546,65 +545,63 @@ router.post("/verify-event-payment", async (req, res) => {
 });
 
 router.get("/pathways/:id", async (req, res) => {
-   const { id } = req.params;
+  const { id } = req.params;
 
-   try {
-     // Get company info
-     const infoResult = await pool.query(
-       "SELECT * FROM company_info ORDER BY id DESC LIMIT 1"
-     );
-     const info = infoResult.rows[0] || {};
+  try {
+    // Get company info
+    const infoResult = await pool.query(
+      "SELECT * FROM company_info ORDER BY id DESC LIMIT 1"
+    );
+    const info = infoResult.rows[0] || {};
 
-     // Get the pathway details
-     const pathwayResult = await pool.query(
-       "SELECT * FROM career_pathways WHERE id = $1",
-       [id]
-     );
-     const pathway = pathwayResult.rows[0];
+    // Get the pathway details
+    const pathwayResult = await pool.query(
+      "SELECT * FROM career_pathways WHERE id = $1",
+      [id]
+    );
+    const pathway = pathwayResult.rows[0];
 
-     if (!pathway) return res.status(404).send("Pathway not found");
+    if (!pathway) return res.status(404).send("Pathway not found");
 
-     // Get courses under this pathway, grouped by level
-     const courseResult = await pool.query(
-       `SELECT * FROM courses 
+    // Get courses under this pathway, grouped by level
+    const courseResult = await pool.query(
+      `SELECT * FROM courses 
        WHERE career_pathway_id = $1
        ORDER BY level ASC, sort_order ASC`,
-       [id]
-     );
+      [id]
+    );
 
-     const courses = courseResult.rows;
+    const courses = courseResult.rows;
 
-     const groupedCourses = {};
-     courses.forEach((course) => {
-       const level = course.level || "Unspecified";
-       if (!groupedCourses[level]) groupedCourses[level] = [];
-       groupedCourses[level].push(course);
-     });
+    const groupedCourses = {};
+    courses.forEach((course) => {
+      const level = course.level || "Unspecified";
+      if (!groupedCourses[level]) groupedCourses[level] = [];
+      groupedCourses[level].push(course);
+    });
 
-     const usersResult = await pool.query("SELECT * FROM users2");
-     const users = usersResult.rows;
-     const isLoggedIn = !!req.session.user; // or whatever property you use for login
-     const profilePic = req.session.user
-       ? req.session.user.profile_picture
-       : null;
-     console.log("User session:", req.session.user);
-     console.log("Is user logged in:", isLoggedIn);
+    const usersResult = await pool.query("SELECT * FROM users2");
+    const users = usersResult.rows;
+    const isLoggedIn = !!req.session.user; // or whatever property you use for login
+    const profilePic = req.session.user
+      ? req.session.user.profile_picture
+      : null;
+    console.log("User session:", req.session.user);
+    console.log("Is user logged in:", isLoggedIn);
 
-     res.render("singlePathway", {
-       info,
-       users,
-       isLoggedIn: !!req.session.user,
-       profilePic,
-       pathway,
-       groupedCourses,
-       subscribed: req.query.subscribed,
-     });
-   } catch (err) {
-     console.error("❌ Error fetching pathway details:", err.message);
-     res.status(500).send("Server error");
-   }
+    res.render("singlePathway", {
+      info,
+      users,
+      isLoggedIn: !!req.session.user,
+      profilePic,
+      pathway,
+      groupedCourses,
+      subscribed: req.query.subscribed,
+    });
+  } catch (err) {
+    console.error("❌ Error fetching pathway details:", err.message);
+    res.status(500).send("Server error");
+  }
 });
 
-
-
-  module.exports = router;
+module.exports = router;

@@ -811,13 +811,17 @@ exports.showCourses = async (req, res) => {
   );
   const info = infoResult.rows[0] || {};
 
-  const coursesResult = await pool.query(`
-    SELECT courses.*, cp.title AS pathway_name
-    FROM courses
-    LEFT JOIN career_pathways cp ON cp.id = courses.career_pathway_id
-    ORDER BY cp.title ASC, courses.level ASC, sort_order ASC 
-  `);
+  // const coursesResult = await pool.query(`
+  //   SELECT courses.*, cp.title AS pathway_name
+  //   FROM courses
+  //   LEFT JOIN career_pathways cp ON cp.id = courses.career_pathway_id
+  //   ORDER BY cp.title ASC, courses.level ASC, sort_order ASC 
+  // `);
 
+  const coursesResult = await pool.query(
+    "SELECT * FROM courses ORDER BY created_at DESC"
+  );
+  
   const pathwaysResult = await pool.query("SELECT * FROM career_pathways");
 
   // Group courses by pathway and level
@@ -838,13 +842,14 @@ exports.showCourses = async (req, res) => {
     search: req.query.search || "",
     careerPathways: pathwaysResult.rows,
     groupedCourses,
+    courses: coursesResult.rows,
   });
 };
 
 
 exports.createCourse = async (req, res) => {
     console.log("Creating course with:", req.body);
-  const { title, description, level, career_pathway_id, sort_order } = req.body;
+  const { title, description, level, career_pathway_id, sort_order, Age } = req.body;
   let thumbnail_url = null;
 
   if (req.file) {
@@ -858,9 +863,9 @@ exports.createCourse = async (req, res) => {
 
 
   await pool.query(
-    `INSERT INTO courses (title, description, level, career_pathway_id, thumbnail_url, sort_order)
-     VALUES ($1, $2, $3, $4, $5, $6)`,
-    [title, description, level, career_pathway_id || null, thumbnail_url, sort_order]
+    `INSERT INTO courses (title, description, level, career_pathway_id, thumbnail_url, sort_order, Age)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+    [title, description, level, career_pathway_id || null, thumbnail_url, sort_order, Age || null]
   );
 
   res.redirect("/admin/courses");
@@ -868,7 +873,7 @@ exports.createCourse = async (req, res) => {
 
 exports.editCourse = async (req, res) => {
   const { id } = req.params;
-  const { title, description, level, career_pathway_id, sort_order } = req.body;
+  const { title, description, level, career_pathway_id, sort_order, Age } = req.body;
 
   try {
     let thumbnail_url = null;
@@ -895,8 +900,9 @@ exports.editCourse = async (req, res) => {
            level = $3,
            career_pathway_id = $4,
            thumbnail_url = $5,
-           sort_order = $6
-       WHERE id = $7`,
+           sort_order = $6,
+           Age = $7
+       WHERE id = $8`,
       [
         title,
         description,
@@ -904,6 +910,7 @@ exports.editCourse = async (req, res) => {
         career_pathway_id || null,
         updatedThumbnail,
         sort_order || null,
+        Age || null,
         id,
       ]
     );
