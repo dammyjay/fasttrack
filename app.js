@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  res.locals.title = "Fastrack"; // Default title
+  res.locals.title = "Fasttrack Innovations"; // Default title
   res.locals.favicon = "/images/fasttrack.jpg"; // Default favicon
   next();
 });

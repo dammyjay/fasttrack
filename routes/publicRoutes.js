@@ -250,7 +250,7 @@ router.get("/", async (req, res) => {
         events,
         walletBalance,
         career_pathways,
-        title: "Company Home",
+        title: "Fasttrack Innovations",
         profilePic,
         benefits: benefitsRes.rows,
         courses: coursesResult.rows,
