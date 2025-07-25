@@ -74,22 +74,6 @@
     <% }) %>
     </div> -->
 
-    <section>
-      <% for (course of courses) { %>
-        <div class="course-card">
-          <% if (course.thumbnail_url) { %>
-            <img src="<%= course.thumbnail_url %>" alt="Course Thumbnail" />
-          <% } else { %>
-            <img src="/images/default-course-thumbnail.png" alt="Default Thumbnail" />
-          <% } %>
-          <h4><%= course.title %></h4>
-          <p><%- course.description.substring(0, 100) %>...</p>
-          <small><strong>Age</strong> | 14 - 19 (years)</small><br>
-          <!-- <small><strong>₦ 30,000</strong></small><br>
-          <button>Purchase Course</button> -->
-        </div>
-    </section>
-   
     <% for (let pathway in groupedCourses) { %>
   <div class="pathway-group" data-pathway="<%= pathway %>">
     <h2 style="margin-top: 2rem; color: goldenrod;"><%= pathway %></h2>
