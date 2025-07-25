@@ -110,8 +110,7 @@
 
    
     <!-- Pathways -->
-    <section id="articles" class="section">
-      <!-- <h2>Checkout our career pathways</h2> -->
+    <!-- <section id="articles" class="section">
        <h2 style="color: black;">What we Offer</h2>
       <div class="card-grid">
         <% career_pathways.forEach((pathway, idx) => { %>
@@ -126,28 +125,26 @@
                 />
               </a>
             <% } %>
-            <!-- <h3><%- pathway.title %></h3>  -->
              <a href="/pathways/<%= pathway.id %>">
               <h3><%- pathway.title %></h3>
             </a>
-             <!-- <h3 style="color: #1660E8;"><%- pathway.title %></h3>  -->
             <div class="article-body">
               <span id="article-short-<%= idx %>" style="display: block;">
                 <%- pathway.description %>...
               </span>
-              <!-- <span id="article-long-<%= idx %>" style="display: block;">
+              <span id="article-long-<%= idx %>" style="display: block;">
                 
                 <button class="continue-reading-btn" onclick="continueReading(<%= pathway.id %>)">Continue Reading</button>
-              </span> -->
+              </span>
             </div>
-            <!-- <small><%- new Date(pathway.created_at).toLocaleString() %></small> -->
+            <small><%- new Date(pathway.created_at).toLocaleString() %></small>
           </div>
         <% }) %>
       </div>
       <div style="text-align: center; margin-top: 20px">
-        <!-- <a href="/articles" class="login-button">View All pathway</a> -->
+        <a href="/articles" class="login-button">View All pathway</a>
       </div>
-    </section>
+    </section> -->
 
     <!-- scripts for benefits display  -->
     <!-- <section id="benefits" class="section">
@@ -176,8 +173,10 @@
               <img src="/images/hero1.jpg" alt="Icon" />
             </div>
             <div class="benefit-details">
-              <h4>Benefit 1</h4>
-              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+              <h4>Build 21st-Century Skills</h4>
+              <p>Our hands-on projects are designed to develop core 
+                life skills like problem-solving, 
+                critical thinking, and creativity.</p>
             </div>
           </div>
 
@@ -186,8 +185,9 @@
               <img src="/images/hero1.jpg" alt="Icon" />
             </div>
             <div class="benefit-details">
-              <h4>Benefit 2</h4>
-              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+              <h4>Growth Mindset</h4>
+              <p>We foster resilience by teaching students to embrace challenges 
+                and view errors not as failures, but as crucial steps toward innovation.</p>
             </div>
           </div>
 
@@ -196,8 +196,9 @@
               <img src="/images/hero1.jpg" alt="Icon" />
             </div>
             <div class="benefit-details">
-              <h4>Benefit 3</h4>
-              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+              <h4>Transform Screen Time into Creative Time</h4>
+              <p>Our programs shift students from being passive consumers of technology 
+                to active builders who can bring their own ideas to life.</p>
             </div>
           </div>
 
@@ -206,8 +207,9 @@
               <img src="/images/hero1.jpg" alt="Icon" />
             </div>
             <div class="benefit-details">
-              <h4>Benefit 4</h4>
-              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+              <h4>Build a Stand-Out Portfolio</h4>
+              <p>Your child will finish our courses with an impressive portfolio of projects 
+                that demonstrates their skills for college and job applications.</p>
             </div>
           </div>
 
@@ -216,8 +218,9 @@
               <img src="/images/hero1.jpg" alt="Icon" />
             </div>
             <div class="benefit-details">
-              <h4>Benefit 5</h4>
-              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+              <h4>Prioritize Digital Citizenship</h4>
+              <p>We integrate lessons on online safety and ethics into our curriculum, 
+                ensuring students become responsible and confident digital creators.</p>
             </div>
           </div>
 
@@ -226,8 +229,9 @@
               <img src="/images/hero1.jpg" alt="Icon" />
             </div>
             <div class="benefit-details">
-              <h4>Benefit 6</h4>
-              <p>We introduce basic STEM concepts through play-based, hands-on activities that develop early logic, creativity, and problem-solving skills.</p>
+              <h4>Unmatched Flexibility</h4>
+              <p>Our online platform allows your child to learn from top 
+                instructors and progress at their own pace, right from the comfort of home.</p>
             </div>
           </div>
         

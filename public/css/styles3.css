@@ -30,7 +30,7 @@
 
     .signup-body {
         position: relative;
-        background-image: url('/images/banner.jpg');
+        /* background-image: url('/images/banner.jpg'); */
         background-repeat: no-repeat;
         background-position: center top;
         background-size: cover;
