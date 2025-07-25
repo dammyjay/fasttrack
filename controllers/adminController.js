@@ -86,7 +86,8 @@ exports.handleResetPassword = async (req, res) => {
   );
   res.render("admin/login", {
     error: null,
-    title: "Login",
+    title: "Login form",
+    favicon: "/public/images/fasttrack.jpg",
     redirect: "",
     message: "Password reset successful. Please log in.",
   });
@@ -95,7 +96,8 @@ exports.handleResetPassword = async (req, res) => {
 exports.showLogin = (req, res) => {
   res.render("admin/login", {
     error: null,
-    title: "Login",
+    title: "Login form",
+    favicon: "/images/fasttrack.jpg",
     redirect: req.query.redirect || "",
   });
 };
