@@ -388,12 +388,16 @@ router.get("/courses", async (req, res) => {
   const careerPathwaysResult = await pool.query(
     "SELECT * FROM career_pathways ORDER BY title"
   );
-  const coursesResult = await pool.query(`
-    SELECT courses.*, cp.title AS pathway_name
-    FROM courses
-    LEFT JOIN career_pathways cp ON cp.id = courses.career_pathway_id
-    ORDER BY cp.title ASC, courses.level ASC, sort_order ASC
-  `);
+  // const coursesResult = await pool.query(`
+  //   SELECT courses.*, cp.title AS pathway_name
+  //   FROM courses
+  //   LEFT JOIN career_pathways cp ON cp.id = courses.career_pathway_id
+  //   ORDER BY cp.title ASC, courses.level ASC, sort_order ASC
+  // `);
+
+  const coursesResult = await pool.query(
+    "SELECT * FROM courses ORDER BY title"
+  );
 
   // Grouping courses by pathway and level
   const groupedCourses = {};
@@ -427,9 +431,11 @@ router.get("/courses", async (req, res) => {
   res.render("userCourses", {
     info,
     users,
+    title: "Courses",
     walletBalance,
     isLoggedIn: !!req.session.user,
     profilePic,
+    courses: coursesResult.rows,
     groupedCourses,
     careerPathways: careerPathwaysResult.rows,
     subscribed: req.query.subscribed,

@@ -95,6 +95,14 @@
         <% } %>
 
         <a href="/register/<%= event.id %>" class="btn-register">Register</a>
+        <button onclick="promptLogin()" class="btn btn-primary">Go back</button>
+      <!-- </a> -->
+      <script>
+        function promptLogin() {
+          // alert("Please login to make a payment.");
+          window.location.href = "/#events";
+        }
+      </script>
       </div>
       
       <div class="event_details">

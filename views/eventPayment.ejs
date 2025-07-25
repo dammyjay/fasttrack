@@ -16,6 +16,14 @@
     <p><strong>Amount:</strong> ₦<%= reg.amount_paid %></p>
 
     <button onclick="payWithPaystack()">Pay Now</button>
+    <button onclick="promptLogin()" class="btn btn-primary">Go back</button>
+      <!-- </a> -->
+      <script>
+        function promptLogin() {
+          // alert("Please login to make a payment.");
+          window.location.href = "/#events";
+        }
+      </script>
   </div>
 
   <script>
